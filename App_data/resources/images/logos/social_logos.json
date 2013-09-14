@@ -1,0 +1,62 @@
+{
+    "current": "1",
+    "nr_logos": "6",
+    "social_logos":
+    {
+        "linkedin":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/social/LinkedIn_logo.png",
+                "type": "image/png"
+            }
+        },
+        "facebook":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/social/FaceBook_logo.png",
+                "type": "image/png"
+            }
+        },
+        "twitter":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/social/Twitter_logo.png",
+                "type": "image/png"
+            }
+        },
+        "google_plus":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/social/GooglePlus_logo.png",
+                "type": "image/png"
+            }
+        },
+        "youtube":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/social/YouTube_logo.png",
+                "type": "image/png"
+            }
+        },
+        "skype":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/social/Skype_logo.png",
+                "type": "image/png"
+            }
+        }
+    },
+    "usage_count": 1
+}

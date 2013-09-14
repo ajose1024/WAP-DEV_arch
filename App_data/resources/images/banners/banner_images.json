@@ -1,0 +1,148 @@
+{
+    "current_res": "468x60",
+    "nr_resolutions": "1",
+    "resolutions":
+    {
+        "0": "468x60"
+    },
+    "468x60":
+    {
+        "default":
+        {
+            "current": "1",
+            "nr_images": "12",
+            "0": 
+            {
+                "file": "\/@pics\/banners\/468x60_NerdLIfeWood.jpg",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+            "1":
+            {
+                "file": "\/@pics\/banners\/Aqua_468x60.jpg",
+                "type": "image\/jpg" ,
+                "link": "#"
+            } ,
+            "2":
+            {
+                "file": "\/@pics\/banners\/Chocolate_468x60.jpg",
+                "type": "image\/jpg" ,
+                "link": "#"
+            } ,
+            "3":
+            {
+                "file": "\/@pics\/banners\/DEEP1_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            } ,
+            "4":
+            {
+                "file": "\/@pics\/banners\/Dark_Green_468x60.jpg",
+                "type": "image\/jpg" ,
+                "link": "#"
+            } ,
+            "5":
+            {
+                "file": "\/@pics\/banners\/HANSEN12_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            } ,
+            "6":
+            {
+                "file": "\/@pics\/banners\/JC1_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            } ,
+            "7":
+            {
+                "file": "\/@pics\/banners\/KCB_DRIVER1_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            } ,
+            "8":
+            {
+                "file": "\/@pics\/banners\/LISA3_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            } ,
+            "9":
+            {
+                "file": "\/@pics\/banners\/MD_ENG1a_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            } ,
+            "10":
+            {
+                "file": "\/@pics\/banners\/banner_468x60.jpg",
+                "type": "image\/jpg" ,
+                "link": "#"
+            } ,
+            "11":
+            {
+                "file": "\/@pics\/banners\/sw4_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            }
+        },
+        "set-1":
+        {
+            "current": "0",
+            "nr_images": "9",
+            "0": 
+            {
+                "file": "\/@pics\/banners\/PF2_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+            "1": 
+            {
+                "file": "\/@pics\/banners\/RV1_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+            "2": 
+            {
+                "file": "\/@pics\/banners\/SA1_2_05_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+            "3": 
+            {
+                "file": "\/@pics\/banners\/SA_purple2_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+            "4": 
+            {
+                "file": "\/@pics\/banners\/STEAK5_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+            "5": 
+            {
+                "file": "\/@pics\/banners\/VF_banner4_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            },
+            "6": 
+            {
+                "file": "\/@pics\/banners\/VW5r_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            },
+            "7": 
+            {
+                "file": "\/@pics\/banners\/ecom_orange1_468x60.gif",
+                "type": "image\/gif" ,
+                "link": "#"
+            },
+            "8": 
+            {
+                "file": "\/@pics\/banners\/PF2_468x60.gif",
+                "type": "image\/jpg" ,
+                "link": "#"
+            },
+        }
+    },
+    "usage_count": "0"
+}

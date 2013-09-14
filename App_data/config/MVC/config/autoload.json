@@ -1,0 +1,31 @@
+{
+    "autoload":
+    {
+        "packages":
+        [
+    
+        ] ,
+        "libraries":
+        [
+            "database" ,
+            "presentation_session" ,
+            "session"
+        ] ,
+        "helper":
+        [
+    
+        ] ,
+        "config":
+        [
+    
+        ] ,
+        "language":
+        [
+    
+        ] ,
+        "model":
+        [
+    
+        ]
+    }
+}

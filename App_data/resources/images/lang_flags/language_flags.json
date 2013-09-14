@@ -1,0 +1,35 @@
+{
+    "current": "1",
+    "nr_langs": "3",
+    "language_flags":
+    {
+        "pt-pt":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/lang_flags/pt.png",
+                "type": "image/png"
+            }
+        },
+        "en-us":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/lang_flags/us.png",
+                "type": "image/png"
+            }
+        },
+        "pt-br":
+        {
+            "nr_res": "1",  
+            "default":
+            {
+                "file": "/@pics/lang_flags/br.png",
+                "type": "image/png"
+            }
+        }
+    },
+    "usage_count": 1
+}

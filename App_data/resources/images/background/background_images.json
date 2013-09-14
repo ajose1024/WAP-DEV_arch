@@ -1,0 +1,53 @@
+{
+    "current": "1",
+    "nr_images": "9",
+    "background":
+    {
+        "0": 
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_1.jpg",
+            "type":"image\/jpg"
+        },
+        "1":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_2.jpg",
+            "type": "image\/jpg"
+        },
+        "2":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_3.jpg",
+            "type": "image\/jpg"
+        },
+        "3":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_4.jpg",
+            "type": "image\/jpg"
+        },
+        "4":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_5.jpg",
+            "type": "image\/jpg"
+        },
+        "5":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_6.jpg",
+            "type":"image\/jpg"
+        },
+        "6":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_7.jpg",
+            "type": "image\/jpg"
+        },
+        "7":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_8.jpg",
+            "type": "image\/jpg"
+        },
+        "8":
+        {
+            "file": "\/clientes\/colombo_shopping_center\/Centro_Comercial_Colombo_9.jpg",
+            "type": "image\/jpg"
+        }
+    },
+    "usage_count": 1
+}

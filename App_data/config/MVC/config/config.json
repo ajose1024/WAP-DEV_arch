@@ -1,0 +1,85 @@
+{
+    "config":
+    {
+        "base_url":                 "http://www.metalstone.pt/" ,
+
+        "index_page":               "index.php" ,
+        
+        "uri_protocol":             "REQUEST_URI" ,
+        
+        "url_suffix":               "" ,
+        
+        "language":                 "english" ,
+        
+        "charset":                  "UTF-8" ,
+        
+        "enable_hooks":             "TRUE" ,
+        
+        "subclass_prefix":          "Wap_" ,
+        
+        "permited_uri_chars":       "a-z 0-9~%.:_\\-@" ,
+        
+        "allow_get_array":          "TRUE" ,
+        "enable_query_strings":     "FALSE" ,
+        "controller_trigger":       "c" ,
+        "function_trigger":         "m" ,
+        "directory_trigger":        "d" ,
+        
+        "log_threshold":            "4" ,
+
+        "log_path":                 "/home/metalstone-2/logs" ,
+        
+        "log_date_format":          "Y-m-d H:i:s" ,
+        
+        "cache_path":               "" ,
+        
+        "encryption_key":           "b0de808e18b2284dc5dc3545d61d6e0a" ,
+        "p_encryption_key":         "7af8d4377b94175fc78da8064a6a2a5e" ,
+        
+        "sess_cookie_name":         "WAP_session" ,
+        "sess_expiration":          "0" ,
+        "sess_expire_on_close":     "FALSE" ,
+        "sess_encrypt_cookie":      "TRUE" ,
+        "sess_use_database":        "TRUE" ,
+        "sess_table_name":          "wap_sessions" ,
+        "sess_match_ip":            "FALSE" ,
+        "sess_match_useragent":     "TRUE" ,
+        "sess_time_to_update":      "300" ,
+
+        "p_sess_cookie_name":       "WAP_p_session" ,
+        "p_sess_expiration":        "0" ,
+        "p_sess_expire_on_close":   "FALSE" ,
+        "p_sess_encrypt_cookie":    "TRUE" ,
+        "p_sess_use_database":      "TRUE" ,
+        "p_sess_table_name":        "wap_p_sessions" ,
+        "p_sess_match_ip":          "FALSE" ,
+        "p_sess_match_useragent":   "TRUE" ,
+        "p_sess_time_to_update":    "300" ,
+        
+        "cookie_prefix":            "" ,
+        "cookie_domain":            "www.metalstone.pt" ,
+        "cookie_path":              "" ,
+        "cookie_secure":            "FALSE" ,
+
+        "p_cookie_prefix":          "" ,
+        "p_cookie_domain":          "www.metalstone.pt" ,
+        "p_cookie_path":            "" ,
+        "p_cookie_secure":          "FALSE" ,
+        
+        "global_xss_filtering":     "FALSE" ,
+        
+        "csrf_protection":          "FALSE" ,
+        "csrf_token_name":          "csrf_test_name" ,
+        "csrf_cookie_name":         "csrf_cookie_name" ,
+        "csrf_expire":              "7200" ,
+
+        "compress_output":          "FALSE" ,
+
+        "time_reference":           "local" ,
+
+        "rewrite_short_tags":       "FALSE" ,
+
+        "proxy_ips":                ""
+        
+    }
+}
