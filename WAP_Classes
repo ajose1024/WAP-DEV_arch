@@ -1,0 +1,20 @@
+WAP - WEB Application Platform
+------------------------------
+
+Static Classes
+--------------
+  system            --> System functions (STATIC class)
+  signals           --> OS process signals (STATIC class)
+  in_out            --> Basic I/O functions (STATIC class)
+  IPC               --> IPC functions (STATIC class)
+  WAP               --> WAP base functions and data (STATIC class)
+  WAP_data          --> WAP global DATA (STATIC class)
+  WAP_system        --> WAP generic system functions (STATIC class)
+  WAP_config        --> WAP configuration functions (STATIC class)
+  WAP_storage       --> WAP pressistent data storage (STATIC class)
+  WAP_data_context  --> WAP data conntext functions and data (STATIC class)
+  WAP_template      --> WAP template engine abstraction (STATIC class)
+  WAP_view          --> WAP layout and view functions and data (STATIC class)
+  WAP_DB            --> WAP database engine abstraction (STATIC class)
+  WAP_filesys       --> WAP file system functions and data (STATIC class)
+
