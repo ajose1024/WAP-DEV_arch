@@ -10,6 +10,7 @@ Static Classes
   WAP               --> WAP base functions and data (STATIC class)
   WAP_data          --> WAP global DATA (STATIC class)
   WAP_system        --> WAP generic system functions (STATIC class)
+  WAP_registery     --> WAP registry functions (STATIC class)
   WAP_config        --> WAP configuration functions (STATIC class)
   WAP_storage       --> WAP pressistent data storage (STATIC class)
   WAP_data_context  --> WAP data conntext functions and data (STATIC class)
