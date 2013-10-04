@@ -34,19 +34,19 @@ WAP -- WEB Application Platform
   This class holds the methods and properties relating to persistent storage functions
 
 * <b><i>WAP_data_context</i></b> (WAP data context) <br/>
-  This class holds the methods and properties relating data context functions and data
+  This class holds the methods and properties relating to data context functions and data
 
-* <b><i>WAP_tempalte</i></b> (WAP template engine abstraction) <br/>
-  This class holds the methods and properties relating template engine abstraction
+* <b><i>WAP_template</i></b> (WAP template engine abstraction) <br/>
+  This class holds the methods and properties relating to template engine abstraction
 
 * <b><i>WAP_view</i></b> (WAP layout and view functions and data) <br/>
   This class holds the methods and properties relating to layout and view functions and data
 
 * <b><i>WAP_data_content</i></b> (WAP data content server) <br/>
-  This class holds the methods and properties relating the data content provider
+  This class holds the methods and properties relating to the data content provider
 
 * <b><i>WAP_DB</i></b> (WAP database engine abstraction) <br/>
-  This class holds the methods and properties realting the database engine abstraction
+  This class holds the methods and properties relating to the database engine abstraction
 
 * <b><i>WAP_filesys</i></b> (WAP file system functions and data) <br/>
-  This class holds the methods and properties relating file system functions and data
+  This class holds the methods and properties relating to file system functions and data
