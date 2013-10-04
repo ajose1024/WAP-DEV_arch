@@ -15,6 +15,7 @@ Static Classes
   WAP_data_context  --> WAP data conntext functions and data (STATIC class)
   WAP_template      --> WAP template engine abstraction (STATIC class)
   WAP_view          --> WAP layout and view functions and data (STATIC class)
+  WAP_data_content  --> WAP data content server (STATIC class)
   WAP_DB            --> WAP database engine abstraction (STATIC class)
   WAP_filesys       --> WAP file system functions and data (STATIC class)
 
