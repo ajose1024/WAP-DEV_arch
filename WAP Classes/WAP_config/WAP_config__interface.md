@@ -29,12 +29,12 @@ WAP -- WEB Application Platform
 >     
 >     // This property holds the version of this static class
 >     private static $version = '0.010' ;
-
-
+> 
+> 
 >     // This property holds the  'general_config'  file data
 >     private static $general_config = null ;
-
-
+> 
+> 
 >     // -------------------------------------
 >     // CodeIgniter config data (MVC element)
 >     // -------------------------------------
@@ -99,8 +99,8 @@ WAP -- WEB Application Platform
 >     {
 >         
 >     }
-
-
+> 
+> 
 >     // Method:  initialize()        // Private method
 >     //
 >     // Class private initialize function
@@ -137,7 +137,9 @@ WAP -- WEB Application Platform
 >         }
 > 
 > 
+>         // ----------------------------
 >         // Read MVC configuration files
+>         // ----------------------------
 > 
 >         $MVC_config_files = self::$general_config[ 'general_config' ][ 'config_files' ][ 'MVC' ] ; 
 > 
@@ -154,10 +156,49 @@ WAP -- WEB Application Platform
 >             }
 >         }
 >     }
+> 
+> 
+>     // Method:  get_user_property( $property )    // Private method
+>     //
+>     // This function gets the value on the static property in this class, whose
+>     // name is passed in $property
+> 
+>     private static function get_user_property( $property )
+>     {
+>         if( ! property_exists( 'WAP_config', $property ) )
+>         {
+>             return  null ;
+>         }
+> 
+>         $vars = get_class_vars( 'WAP_config' ) ;
+>         return  $vars[ $property ] ;
+>     }
+> 
+> 
+>     // Method:  set_user_property( $property , $value )       // Private method
+>     //
+>     // This function sets the value on the static property in this class, whose
+>     // name is passed in $property with the value passed in $value
+> 
+>     private static function set_user_property( $property , $value )
+>     {
+>         if( ! property_exists( 'WAP_config' , $property ) )
+>         {
+>             return  false ;
+>         }
+>         
+>         // Since I cannot trust the value of $value
+>         // I am putting it in single quotes (I don't
+>         // want its value to be evaled. Thus it will
+>         // just be parsed as a variable reference)
+> 
+>         eval( 'WAP_config' . '::$' . $property . ' = $value;' ) ;
+> 
+>         return  true ;
+>     }
 
 
 ##### <i>PUBLIC methods:</i>
-
 
 >     // Method:  get_version()       // Public method
 >     //
@@ -168,136 +209,93 @@ WAP -- WEB Application Platform
 >         self::initialize() ;
 >         return self::$version ;
 >     }
-
-    
+> 
+> 
 >     // Method:  get_data( $group , $file , $item )
 >     //
 >     // This method retrives the selected data from the private storage properties
 >     // using the parameters  $group, $file, $item  to select the data to return
-    
-    public static function get_data( $group , $file , $item )
-    {
-        $data = self::get_user_property( $group . '_' . $file . '_config' ) ;
-
-        if( key_exists( $item , $data[ $file ] ) )
-        {
-            return  $data[ $file ][ $item ] ;
-        }
-        else
-        {
-            return  '' ;
-        }
-    }
-    
-    
-    public static function string_to_boolean( $item, $key )
-    {
-//        echo "<h5>KEY: </h5>" ;
-//        var_dump( $key ) ;
-//        echo "<h5>ITEM: </h5>" ;
-//        var_dump( $item ) ;
-
-        if( strtoupper( $item ) === 'TRUE' )
-        {
-            // The string corresponds to a boolean TRUE
-            // Return a boolean TRUE
-            return  (bool) TRUE ;
-        }
-        elseif( strtoupper( $item ) === 'FALSE' )
-        {
-            // The string corresponds to a boolean FALSE
-            // Return a boolean FALSE
-            return  (bool) FALSE ;
-        }
-        else
-        {
-            // The string does not correspond neither to a boolean TRUE nor to
-            // a boolean FALSE
-            // Return the string itself, unchanged
-            return  $item ;
-        }
-    }
-    
-    
-    // Method:  adjust_boolean_vars( $data_array )
-    //
-    // This function receives an array and recursivelly adjust every string element
-    // with either 'true' or 'false' to the corresponding boolean values of TRUE
-    // or FALSE. Otherwise, the array element is unchanged.
-    //
-    // If the element passed to the method is not an array, the function doesn't
-    // do anything
-    
-    public static function adjust_boolean_vars( $data_array )
-    {
-        if( is_array( $data_array ) )
-        {
-            $ret_val = array_walk_recursive( $data_array ,  array( 'WAP_config' , 'string_to_boolean' ), $parameters = NULL ) ;
-
-//            var_dump( $ret_val ) ;
-            
-//            var_dump( $data_array ) ;
-            
-            return  $data_array ;
-        }
-        else
-        {
-            return  $data_array ;
-        }
-    }
-    
-
-
-    
-    // Method:  get_user_property( $property )
-    //
-    // This function gets the value on the static property in this class, whose
-    // name is passed in $property
-    
-    private static function get_user_property( $property )
-    {
-        if( ! property_exists( 'WAP_config', $property ) )
-        {
-            return  null ;
-        }
-
-        $vars = get_class_vars( 'WAP_config' ) ;
-        return  $vars[ $property ] ;
-    }
-
-
-    // Method:  set_user_property( $property , $value )
-    //
-    // This function sets the value on the static property in this class, whose
-    // name is passed in $property with the value passed in $value
-
-    private static function set_user_property( $property , $value )
-    {
-        if( ! property_exists( 'WAP_config' , $property ) )
-        {
-            return  false ;
-        }
-        
-        /* Since I cannot trust the value of $value
-         * I am putting it in single quotes (I don't
-         * want its value to be evaled. Now it will
-         * just be parsed as a variable reference).
-         */
-        
-        eval( 'WAP_config' . '::$' . $property . ' = $value;' ) ;
-        
-        return  true ;
-    }
-
-    
-    
-    public static function dump_general_config()
-    {
-        return  self::$general_config ;
-    }
+> 
+>     public static function get_data( $group , $file , $item )
+>     {
+>         $data = self::get_user_property( $group . '_' . $file . '_config' ) ;
+> 
+>         if( key_exists( $item , $data[ $file ] ) )
+>         {
+>             return  $data[ $file ][ $item ] ;
+>         }
+>         else
+>         {
+>             return  '' ;
+>         }
+>     }
+> 
+> 
+>     // Method:    string_to_boolean( $item, $key )
+>     //
+>     // This method performs a typecast to BOOLEAN from a STRING variable
+>
+>     public static function string_to_boolean( $item, $key )
+>     {
+>         if( strtoupper( $item ) === 'TRUE' )
+>         {
+>             // The string corresponds to a boolean TRUE
+>             // Return a boolean TRUE
+>             return  (bool) TRUE ;
+>         }
+>         elseif( strtoupper( $item ) === 'FALSE' )
+>         {
+>             // The string corresponds to a boolean FALSE
+>             // Return a boolean FALSE
+>             return  (bool) FALSE ;
+>         }
+>         else
+>         {
+>             // The string does not correspond neither to a boolean TRUE nor to
+>             // a boolean FALSE
+>             // Return the string itself, unchanged
+>             return  $item ;
+>         }
+>     }
+> 
+> 
+>     // Method:  adjust_boolean_vars( $data_array )
+>     //
+>     // This function receives an array and recursivelly adjust every string element
+>     // with either 'true' or 'false' to the corresponding boolean values of TRUE
+>     // or FALSE. Otherwise, the array element is unchanged.
+>     //
+>     // If the element passed to the method is not an array, the function doesn't
+>     // do anything
+>     
+>     public static function adjust_boolean_vars( $data_array )
+>     {
+>         if( is_array( $data_array ) )
+>         {
+>             $ret_val = array_walk_recursive( $data_array ,  array( 'WAP_config' , 'string_to_boolean' ), $parameters = NULL ) ;
+> 
+>             return  $data_array ;
+>         }
+>         else
+>         {
+>             return  $data_array ;
+>         }
+>     }
+>     
+> 
+>     // Method:  dump_general_config()     // Public method
+>     //
+>     // This method is a temporary method to be used during development
+> 
+>     public static function dump_general_config()
+>     {
+>         return  self::$general_config ;
+>     }
     
 }
 
 
-$GLOBALS[ 'WAP_config' ] = WAP_config::get_version() ;
+#### Class inicialization
+
+>     $GLOBALS[ 'WAP_config' ] = WAP_config::get_version() ;
 
