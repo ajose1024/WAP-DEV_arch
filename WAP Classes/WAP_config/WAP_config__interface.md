@@ -7,18 +7,17 @@ WAP -- WEB Application Platform
 #### Class Interface
 
 
-interface WAP_config__Interface
-{
+> interface WAP_config__Interface <br/>
+> { <br/>
+>     public static function get_version() ;
+> 
+> }
 
-    public static function get_version() ;
 
-
-    
-}
+#### Class methods
 
 class WAP_config implements WAP_config__Interface
 {
-
     /**
      * Construct won't be called inside this class and is uncallable from
      * the outside.
@@ -30,8 +29,11 @@ class WAP_config implements WAP_config__Interface
         
     }
 
-    
+
+
+    // ------------------------
     // Class private properties
+    // ------------------------
 
     // This property indicates if the calss has been already intitialized or not
     private static $initialized = FALSE ;
@@ -39,11 +41,13 @@ class WAP_config implements WAP_config__Interface
     // This property holds the version of this static class
     private static $version = '0.010' ;
  
+ 
     
     // This property holds the  'general_config'  file data
     private static $general_config = null ;
     
     
+
     // -----------------------
     // CodeIgniter config data
     // -----------------------
@@ -88,16 +92,25 @@ class WAP_config implements WAP_config__Interface
     private static $MVC_user_agents_config = array() ;
     
     
-    
-    
-    
-    
-    
+
     // -----------------------
     // Class public properties
     // -----------------------
+    
+    
+    
+    
+    // -------------
+    // Class methods
+    // -------------
 
-    // Class private initialize fuction
+
+    // Method:  initialize()    (private)
+    //
+    // Class private initialize function
+    //
+    // This class initializes the private  self::$initialized  property to TRUE
+    // and performs the necessary initialization functions
 
     private static function initialize()
     {
