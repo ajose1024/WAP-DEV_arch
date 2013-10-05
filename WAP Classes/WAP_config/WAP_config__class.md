@@ -11,7 +11,7 @@ WAP -- WEB Application Platform
 >     { 
 >         public static function get_version() ;
 > 
->         public static function get_data( $group , $file , $item )
+>         public static function get_data( $group , $file , $item ) ;
 >     
 >     }
 
@@ -302,4 +302,5 @@ WAP -- WEB Application Platform
 #### Class inicialization
 
 >     $GLOBALS[ 'WAP_config' ] = WAP_config::get_version() ;
+>     $WAP_data::$version[ 'WAP_config' ] = WAP_config::get_version() ;
 
