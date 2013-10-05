@@ -1,0 +1,32 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   App_code/README.txt
+#	new file:   WAP Classes/IPC/README.txt
+#	new file:   WAP Classes/README.txt
+#	new file:   WAP Classes/WAP/README.txt
+#	new file:   WAP Classes/WAP_DB/README.txt
+#	new file:   WAP Classes/WAP_config/README.txt
+#	new file:   WAP Classes/WAP_data/README.txt
+#	new file:   WAP Classes/WAP_data_content/README.txt
+#	new file:   WAP Classes/WAP_data_context/README.txt
+#	new file:   WAP Classes/WAP_filesys/README.txt
+#	new file:   WAP Classes/WAP_registry/README.txt
+#	new file:   WAP Classes/WAP_storage/README.txt
+#	new file:   WAP Classes/WAP_system/README.txt
+#	new file:   WAP Classes/WAP_template/README.txt
+#	new file:   WAP Classes/WAP_view/README.txt
+#	new file:   WAP Classes/in_out/README.txt
+#	new file:   WAP Classes/signals/README.txt
+#	new file:   WAP Classes/system/README.txt
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	$pfebk/
+#	nwyhuvtd.a1j.txt
+
