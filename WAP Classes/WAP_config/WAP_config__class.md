@@ -302,5 +302,5 @@ WAP -- WEB Application Platform
 #### Class inicialization
 
 >     $GLOBALS[ 'WAP_config' ] = WAP_config::get_version() ;
->     $WAP_data::$version[ 'WAP_config' ] = WAP_config::get_version() ;
+>     $WAP_data::$module_version[ 'WAP_config' ] = WAP_config::get_version() ;
 
