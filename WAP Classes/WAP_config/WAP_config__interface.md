@@ -80,8 +80,12 @@ WAP -- WEB Application Platform
 >     
 
 
-
 ##### <i>PUBLIC properties:</i>
+
+>     // -----------------------
+>     // Class public properties
+>     // -----------------------
+> 
 
 
 #### Class methods
