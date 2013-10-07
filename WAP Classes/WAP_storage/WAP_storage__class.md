@@ -101,79 +101,25 @@ WAP -- WEB Application Platform
 >         // Perform class INITIALIZATION
 >         // ----------------------------
 >         //
->         // Initialize the  WAP_config  class
->         $general_config_file = $GLOBALS[ 'DOC_ROOT' ] .
->                                "/App_data/config/general_config.json" ;
-> 
->         if( file_exists( $general_config_file ) )
->         {
->             self::$general_config = object_to_array( read_JSON_file( $general_config_file ) ) ;
->         }
->         else
->         {
->             self::$general_config = array() ;
->         }
-> 
-> 
->         // ----------------------------
->         // Read MVC configuration files
->         // ----------------------------
-> 
->         $MVC_config_files = self::$general_config[ 'general_config' ][ 'config_files' ][ 'MVC' ] ; 
-> 
->         foreach( $MVC_config_files as $MVC_config_name => $MVC_config_file )
->         {
->             if( file_exists( $GLOBALS[ 'DOC_ROOT' ] . $MVC_config_file ) )
->             {
->                 $file_data = object_to_array( read_JSON_file( $GLOBALS[ 'DOC_ROOT' ] . $MVC_config_file ) ) ;
->                 
->                 self::set_user_property( 'MVC_' . $MVC_config_name . '_config' , 
->                                          $file_data
->                                        ) ;
->                 self::get_user_property( 'MVC_' . $MVC_config_name . '_config' ) ;
->             }
->         }
->     }
-> 
-> 
->     // Method:  get_user_property( $property )    // Private method
->     //
->     // This function gets the value on the static property in this class, whose
->     // name is passed in $property
-> 
->     private static function get_user_property( $property )
->     {
->         if( ! property_exists( 'WAP_config', $property ) )
->         {
->             return  null ;
->         }
-> 
->         $vars = get_class_vars( 'WAP_config' ) ;
->         return  $vars[ $property ] ;
->     }
-> 
-> 
->     // Method:  set_user_property( $property , $value )       // Private method
->     //
->     // This function sets the value on the static property in this class, whose
->     // name is passed in $property with the value passed in $value
-> 
->     private static function set_user_property( $property , $value )
->     {
->         if( ! property_exists( 'WAP_config' , $property ) )
->         {
->             return  false ;
->         }
+>         // Load and de-serialize the 'data_files_config.json' file
+>         $data_files_config_file = $GLOBALS[ 'DOC_ROOT' ] . 
+>                                   "/App_data/config/data_files_config.json"
+>                                 ;
 >         
->         // Since I cannot trust the value of $value
->         // I am putting it in single quotes (I don't
->         // want its value to be evaled. Thus it will
->         // just be parsed as a variable reference)
-> 
->         eval( 'WAP_config' . '::$' . $property . ' = $value;' ) ;
-> 
->         return  true ;
+>         self::$data_files_config = object_to_array( read_JSON_file( $data_files_config_file ) ) ;
+>         
+>         // Get the 'config_files' data section
+>         $config_files = self::$data_files_config[ 'data_files_config' ][ 'config_files' ] ;
+>         
+>         foreach( $config_files as $section_name => $section_data )
+>         {
+>             
+>             self::$data_sections_data = array_merge( self::$data_sections_data , 
+>                                                      array( $section_name => $section_data )
+>                                                    ) ;
+>         }
 >     }
+
 
 
 ##### <i>PUBLIC methods:</i>
@@ -189,88 +135,310 @@ WAP -- WEB Application Platform
 >     }
 > 
 > 
->     // Method:  get_data( $group , $file , $item )
+>     // Method:  get_config_data_file_path( $section , $type , $item, $context = '' )
 >     //
->     // This method retrives the selected data from the private storage properties
->     // using the parameters  $group, $file, $item  to select the data to return
-> 
->     public static function get_data( $group , $file , $item )
->     {
->         $data = self::get_user_property( $group . '_' . $file . '_config' ) ;
-> 
->         if( key_exists( $item , $data[ $file ] ) )
->         {
->             return  $data[ $file ][ $item ] ;
->         }
->         else
->         {
->             return  '' ;
->         }
->     }
-> 
-> 
->     // Method:    string_to_boolean( $item, $key )
+>     // This method returns the config data file path related to the given item:
 >     //
->     // This method performs a typecast to BOOLEAN from a STRING variable
->
->     public static function string_to_boolean( $item, $key )
->     {
->         if( strtoupper( $item ) === 'TRUE' )
->         {
->             // The string corresponds to a boolean TRUE
->             // Return a boolean TRUE
->             return  (bool) TRUE ;
->         }
->         elseif( strtoupper( $item ) === 'FALSE' )
->         {
->             // The string corresponds to a boolean FALSE
->             // Return a boolean FALSE
->             return  (bool) FALSE ;
->         }
->         else
->         {
->             // The string does not correspond neither to a boolean TRUE nor to
->             // a boolean FALSE
->             // Return the string itself, unchanged
->             return  $item ;
->         }
->     }
-> 
-> 
->     // Method:  adjust_boolean_vars( $data_array )
+>     //  SECTION:    This selects the desired section ('general', 'resources', 
+>     //              etc. )
+>     //  TYPE:       This selects the TYPE inside the selected SECTION, such as,
+>     //              for 'resources' section:
+>     //                  'scripts'
+>     //                  'css'
+>     //                  'images'
+>     //                  etc ...
+>     //  ITEM:       This selects the specific element, inside a SECTION and
+>     //              within a TYPE, such as, for 'images' type:
+>     //                  back_ground
+>     //                  banners
+>     //                  lang_files
+>     //                  logos
 >     //
->     // This function receives an array and recursivelly adjust every string element
->     // with either 'true' or 'false' to the corresponding boolean values of TRUE
->     // or FALSE. Otherwise, the array element is unchanged.
+>     // If the selected config data does not exist, then just returns NULL.
 >     //
->     // If the element passed to the method is not an array, the function doesn't
->     // do anything
+>     // If it exists, it returns an array with the following format:
+>     //
+>     //  return_data ->  array( 'file_path'  =>  '/path/to/the/selected/file' ,
+>     //                         'mime-type'  =>  'file_mime-type'
+>     //                       )
 >     
->     public static function adjust_boolean_vars( $data_array )
->     {
->         if( is_array( $data_array ) )
+>     public static function get_config_data_file_path( $section, $type, $item, $context = '' )
+>     {        
+>         if( key_exists( $section, self::$data_sections_data ) )
 >         {
->             $ret_val = array_walk_recursive( $data_array ,  array( 'WAP_config' , 'string_to_boolean' ), $parameters = NULL ) ;
-> 
->             return  $data_array ;
+>             if( key_exists( $type, self::$data_sections_data[ $section ] ) )
+>             {
+>                 if( key_exists( $item, self::$data_sections_data[ $section ][ $type ] ) )
+>                 {
+> //                    var_dump( self::$data_sections_data[ $section ][ $type ][ $item ] ) ;
+>                     
+>                     // Get the config file location
+>                     $config_file_path = $GLOBALS[ 'DOC_ROOT' ] ;
+>                     
+>                     if( key_exists( 'type', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
+>                     {
+>                         if( key_exists( 'base', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
+>                         {
+>                             if( key_exists( 'file', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
+>                             {
+>                                 switch ( self::$data_sections_data[ $section ][ $type ][ $item ][ 'type' ] )
+>                                 {        
+>                                     case 'static':
+>                                         // The file type is 'static', so it does not have any 'context_ID'
+>                                         // in it's path
+>                                         $config_file_path = $config_file_path .
+>                                                             self::$data_sections_data[ $section ][ $type ][ $item][ 'base' ] .
+>                                                             self::$data_sections_data[ $section ][ $type ][ $item][ 'file' ] ;
+>                                         break ;
+>                                 
+>                                     case 'context':
+>                                         // The file type is 'context', so it does have the 'context_ID'
+>                                         // between the 'file_base' and the 'file_name'
+>                                         if( $context === '' )
+>                                         {
+>                                             $context = '' ;
+>                                         }
+>                                         else
+>                                         {
+>                                             $context = '/' . $context ;
+>                                         }
+>                                         $config_file_path = $config_file_path .
+>                                                             self::$data_sections_data[ $section ][ $type ][ $item][ 'base' ] .
+>                                                             $context .
+>                                                             self::$data_sections_data[ $section ][ $type ][ $item][ 'file' ] ;
+>                                         break ;
+>                                 
+>                                     DEFAULT:
+>                                         // Handle the remaining options
+>                                         
+>                                         break ;
+>                                 }
+>                                 
+>                                 // Return the file path
+>                                 
+>                                 if( key_exists( 'mime', self::$data_sections_data[ $section ][ $type ][ $item] ) )
+>                                 {
+>                                     $mime_type = self::$data_sections_data[ $section ][ $type ][ $item][ 'mime' ] ;
+>                                 }
+>                                 else
+>                                 {
+>                                     $mime_type = '' ;
+>                                 }
+>                                 
+>                                 return  array( 'file_path' => $config_file_path ,
+>                                                'mime-type' => $mime_type
+>                                              ) ;
+>                             }
+>                             else
+>                             {
+>                                 // Return NULL as the file name is not defined
+>                                 return  NULL ;
+>                             }
+>                         }
+>                         else
+>                         {
+>                             // Return NULL as the file base path is not defined
+>                             return  NULL ;
+>                         }
+>                     }
+>                     else
+>                     {
+>                         // Return NULL as the type of the file is not defined
+>                         return  NULL ;
+>                     }
+>                     
+>                     return  self::$data_sections_data[ $section ][ $type ][ $item ] ;
+>                 }
+>                 else
+>                 {
+>                     // Exists   'SECTION' & 'TYPE'
+>                     // Lacks    'ITEM'
+>                     return  NULL ;
+>                 }
+>             }
+>             else
+>             {
+>                 // Exists   'SECTION'
+>                 // Lacks    'TYPE'
+>                 // Untested 'ITEM'
+>                 return  NULL ;
+>             }
 >         }
 >         else
 >         {
->             return  $data_array ;
+>             // Lacks    'SECTION'
+>             // Untested 'TYPE' & 'ITEM'
+>             return  NULL ;
+>         }
+>         
+>     }
+>     
+>     
+>     // Method:  get_config_data( $section, $type, $item, $context = '' )
+>     //
+>     // This method returns the config data file path related to the given item:
+>     //
+>     //  SECTION:    This selects the desired section ('general', 'resources', 
+>     //              etc. )
+>     //  TYPE:       This selects the TYPE inside the selected SECTION, such as,
+>     //              for 'resources' section:
+>     //                  'scripts'
+>     //                  'css'
+>     //                  'images'
+>     //                  etc ...
+>     //  ITEM:       This selects the specific element, inside a SECTION and
+>     //              within a TYPE, such as, for 'images' type:
+>     //                  back_ground
+>     //                  banners
+>     //                  lang_files
+>     //                  logos
+>     //
+>     // If the selected config data does not exist, then just returns NULL.
+> 
+>     public static function get_config_data( $section, $type, $item, $context = '' )
+>     {
+>         $config_file_path_data = self::get_config_data_file_path( $section, $type, $item, $context ) ;
+>         
+> //        var_dump( $config_file_path_data ) ;
+>         
+>         if( ! is_null( $config_file_path_data ) )
+>         {
+>             if( key_exists( 'file_path', $config_file_path_data ) )
+>             {
+>                 if( file_exists( $config_file_path_data[ 'file_path' ] ) )
+>                 {
+>                     if( key_exists( 'mime-type', $config_file_path_data ) )
+>                     {
+>                         $mime_type = $config_file_path_data[ 'mime-type' ] ;
+>                         
+>                         switch( $mime_type )
+>                         {
+>                             case 'text/json':
+>                                 return  object_to_array( read_JSON_file( $config_file_path_data[ 'file_path' ] ) ) ;
+>                                 
+>                                 break ;
+>                             
+>                             case 'text/javascript':
+>                                 return  file_get_contents( $config_file_path_data[ 'file_path' ], FALSE ) ;
+>                             
+>                                 break ;
+>                             
+>                             default:
+>                                 return  NULL ;
+>                                 
+>                                 break ;
+>                         }
+>                     }
+>                     else
+>                     {
+>                         return  NULL ;
+>                     }
+>                 }
+>                 else
+>                 {
+>                     return  NULL ;
+>                 }
+>             }
+>             else
+>             {
+>                 return  NULL ;
+>             }
+>         }
+>         else
+>         {
+>             return  NULL ;
 >         }
 >     }
 >     
-> 
->     // Method:  dump_general_config()     // Public method
+>     
+>     // Method:  set_config_data( $data, $section, $type, $item, $context = '' )
 >     //
->     // This method is a temporary method to be used during development
+>     // This method stores the config data file path related to the given item:
+>     //
+>     //  SECTION:    This selects the desired section ('general', 'resources', 
+>     //              etc. )
+>     //  TYPE:       This selects the TYPE inside the selected SECTION, such as,
+>     //              for 'resources' section:
+>     //                  'scripts'
+>     //                  'css'
+>     //                  'images'
+>     //                  etc ...
+>     //  ITEM:       This selects the specific element, inside a SECTION and
+>     //              within a TYPE, such as, for 'images' type:
+>     //                  back_ground
+>     //                  banners
+>     //                  lang_files
+>     //                  logos
+>     //
+>     // The data file is passed in the $data parameter
 > 
->     public static function dump_general_config()
+>     public static function set_config_data( $data, $section, $type, $item, $context = '' )
 >     {
->         return  self::$general_config ;
+>         $config_file_path_data = self::get_config_data_file_path( $section, $type, $item, $context ) ;
+>         
+>         if( ! is_null( $config_file_path_data ) )
+>         {
+>             if( key_exists( 'file_path', $config_file_path_data ) )
+>             {
+>                 if( file_exists( $config_file_path_data[ 'file_path' ] ) )
+>                 {
+>                     if( key_exists( 'mime-type', $config_file_path_data ) )
+>                     {
+>                         $mime_type = $config_file_path_data[ 'mime-type' ] ;
+>                         
+>                         switch( $mime_type )
+>                         {
+>                             case 'text/json':
+>                                 write_JSON_file( $config_file_path_data[ 'file_path' ] , $data ) ;
+> 
+>                                 break ;
+>                             
+>                             case 'text/javascript':
+> //                                return  file_get_contents( $config_file_path_data[ 'file_path' ], FALSE ) ;
+>                             
+>                                 break ;
+>                             
+>                             default:
+>                                 return  NULL ;
+>                                 
+>                                 break ;
+>                         }
+>                     }
+>                     else
+>                     {
+>                         return  NULL ;
+>                     }
+>                 }
+>                 else
+>                 {
+>                     return  NULL ;
+>                 }
+>             }
+>             else
+>             {
+>                 return  NULL ;
+>             }
+>         }
+>         else
+>         {
+>             return  NULL ;
+>         }
 >     }
-    
-}
+>     
+>     
+> 
+>     
+>     
+>     public static function dump_data_files_config()
+>     {
+>         return  self::$data_files_config ;
+>     }
+>     
+>     public static function dump_data_section_data()
+>     {
+>         return  self::$data_sections_data ;
+>     }
+
 
 
 #### Class inicialization
