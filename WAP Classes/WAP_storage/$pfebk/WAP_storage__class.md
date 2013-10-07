@@ -29,29 +29,55 @@ WAP -- WEB Application Platform
 >     
 >     // This property holds the version of this static class
 >     private static $version = '0.010' ;
->  
->     
->     // Data Files storage: main global property
->     private static $data_files_config = array() ;
->     
->     
->     // This property holds the diferent section's data, indexed by section name
->     //
->     // The section names are as follows:
->     //  'general'   --> This section holds general configuration files in JSON
->     //                  format
->     //  'system'    --> This section holds system configuration files in JSON
->     //                  format
->     //  'resources' --> This section holds resources data channel configuration
->     //                  and data files in JSON format
->     //                  As sub-types, it has:
->     //                  'scripts'   --> Javascript scripts
->     //                  'css'       --> CSS files
->     //                  'images'    --> Image files, of different types, and for
->     //                                  different functions and contexts
->     private static $data_sections_data = array() ;
->     
 > 
+> 
+>     // This property holds the  'general_config'  file data
+>     private static $general_config = null ;
+> 
+> 
+>     // -------------------------------------
+>     // CodeIgniter config data (MVC element)
+>     // -------------------------------------
+> 
+>     // This property holds the  'MVC_autoload_config'  file data
+>     private static $MVC_autoload_config = array() ;
+>     
+>     // This property holds the  'MVC_config_config'  file data
+>     private static $MVC_config_config = array() ;
+>     
+>     // This property holds the  'MVC_constants_config'  file data
+>     private static $MVC_constants_config = array() ;
+>     
+>     // This property holds the  'MVC_database_config'  file data
+>     private static $MVC_database_config = array() ;
+>     
+>     // This property holds the  'MVC_doctypes_config'  file data
+>     private static $MVC_doctypes_config = array() ;
+>     
+>     // This property holds the  'MVC_foreign_chars_config'  file data
+>     private static $MVC_foreign_chars_config = array() ;
+>     
+>     // This property holds the  'MVC_hooks_config'  file data
+>     private static $MVC_hooks_config = array() ;
+>     
+>     // This property holds the  'MVC_migration_config'  file data
+>     private static $MVC_migration_config = array() ;
+>     
+>     // This property holds the  'MVC_mimes_config'  file data
+>     private static $MVC_mimes_config = array() ;
+>     
+>     // This property holds the  'MVC_profiles_config'  file data
+>     private static $MVC_profiles_config = array() ;
+>     
+>     // This property holds the  'MVC_routes_config'  file data
+>     private static $MVC_routes_config = array() ;
+>     
+>     // This property holds the  'MVC_smileys_config'  file data
+>     private static $MVC_smileys_config = array() ;
+>     
+>     // This property holds the  'MVC_user_agents_config'  file data
+>     private static $MVC_user_agents_config = array() ;
+>     
 
 
 ##### <i>PUBLIC properties:</i>
