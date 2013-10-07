@@ -9,7 +9,7 @@ WAP -- WEB Application Platform
 
 >     {
 > 	      "wap": "WEB Application Platform" ,
->    	    "data_files_config":
+>         "data_files_config":
 > 	      {
 > 	          "config_files":
 > 	          {
