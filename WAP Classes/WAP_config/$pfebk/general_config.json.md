@@ -1,10 +1,10 @@
 WAP -- WEB Application Platform
 -------------------------------
 
-### Data Files Config (config file)
+### General Config (config file)
 
 
-#### data_files_config.json
+#### general_config.json
 
 
 >     {
