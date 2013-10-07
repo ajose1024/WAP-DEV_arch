@@ -11,7 +11,9 @@ WAP -- WEB Application Platform
 >     { 
 >         public static function get_version() ;
 > 
->         public static function get_data( $group , $file , $item ) ;
+>     	  public static function get_config_data_file_path( $section, $type, $item, $context = '' ) ;
+>     	  public static function get_config_data( $section, $type, $item, $context = '' ) ;
+> 	  public static function set_config_data( $data, $section, $type, $item, $context = '' ) ;
 >     
 >     }
 
@@ -170,9 +172,11 @@ WAP -- WEB Application Platform
 >             {
 >                 if( key_exists( $item, self::$data_sections_data[ $section ][ $type ] ) )
 >                 {
-> //                    var_dump( self::$data_sections_data[ $section ][ $type ][ $item ] ) ;
->                     
+>		      // ----------------------------
 >                     // Get the config file location
+>		      // ----------------------------
+>
+>		      // Pre-load the 'document_root' base path
 >                     $config_file_path = $GLOBALS[ 'DOC_ROOT' ] ;
 >                     
 >                     if( key_exists( 'type', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
@@ -216,9 +220,9 @@ WAP -- WEB Application Platform
 >                                 
 >                                 // Return the file path
 >                                 
->                                 if( key_exists( 'mime', self::$data_sections_data[ $section ][ $type ][ $item] ) )
+>                                 if( key_exists( 'mime', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
 >                                 {
->                                     $mime_type = self::$data_sections_data[ $section ][ $type ][ $item][ 'mime' ] ;
+>                                     $mime_type = self::$data_sections_data[ $section ][ $type ][ $item ][ 'mime' ] ;
 >                                 }
 >                                 else
 >                                 {
@@ -231,43 +235,53 @@ WAP -- WEB Application Platform
 >                             }
 >                             else
 >                             {
+>                                 // -------------------------------------------
 >                                 // Return NULL as the file name is not defined
+>                                 // -------------------------------------------
 >                                 return  NULL ;
 >                             }
 >                         }
 >                         else
 >                         {
+>                             // ------------------------------------------------
 >                             // Return NULL as the file base path is not defined
+>                             // ------------------------------------------------
 >                             return  NULL ;
 >                         }
 >                     }
 >                     else
 >                     {
+>                         // --------------------------------------------------
 >                         // Return NULL as the type of the file is not defined
+>                         // --------------------------------------------------
 >                         return  NULL ;
 >                     }
->                     
->                     return  self::$data_sections_data[ $section ][ $type ][ $item ] ;
 >                 }
 >                 else
 >                 {
+>                     // ---------------------------
 >                     // Exists   'SECTION' & 'TYPE'
 >                     // Lacks    'ITEM'
+>                     // ---------------------------
 >                     return  NULL ;
 >                 }
 >             }
 >             else
 >             {
+>                 // ------------------
 >                 // Exists   'SECTION'
 >                 // Lacks    'TYPE'
 >                 // Untested 'ITEM'
+>		  // ------------------
 >                 return  NULL ;
 >             }
 >         }
 >         else
 >         {
+>             // ------------------------
 >             // Lacks    'SECTION'
 >             // Untested 'TYPE' & 'ITEM'
+>             // ------------------------
 >             return  NULL ;
 >         }
 >         
@@ -297,9 +311,15 @@ WAP -- WEB Application Platform
 > 
 >     public static function get_config_data( $section, $type, $item, $context = '' )
 >     {
+>         // -------------------------------------------
+>	  // Get the config data file path and file type
+>	  // -------------------------------------------
+>
 >         $config_file_path_data = self::get_config_data_file_path( $section, $type, $item, $context ) ;
->         
-> //        var_dump( $config_file_path_data ) ;
+>
+>	  // ----------------
+>	  // Process the file
+>	  // ----------------
 >         
 >         if( ! is_null( $config_file_path_data ) )
 >         {
@@ -313,16 +333,25 @@ WAP -- WEB Application Platform
 >                         
 >                         switch( $mime_type )
 >                         {
+>			      // ----------------------------------------
+>                             // The file type is 'text/json' (JSON file)
+>                             // ----------------------------------------
 >                             case 'text/json':
 >                                 return  object_to_array( read_JSON_file( $config_file_path_data[ 'file_path' ] ) ) ;
 >                                 
 >                                 break ;
 >                             
+>			      // --------------------------------------------
+>			      // The file type is 'text/javascript' (JS file)
+>			      // --------------------------------------------
 >                             case 'text/javascript':
 >                                 return  file_get_contents( $config_file_path_data[ 'file_path' ], FALSE ) ;
 >                             
 >                                 break ;
 >                             
+>			      // ------------------------
+>			      // The file type in unknown
+>                             // ------------------------
 >                             default:
 >                                 return  NULL ;
 >                                 
@@ -331,21 +360,34 @@ WAP -- WEB Application Platform
 >                     }
 >                     else
 >                     {
+>			  // -------------------------------------------------
+>			  // The file path data 'mime-type' key does not exist
+>			  // -------------------------------------------------
 >                         return  NULL ;
 >                     }
 >                 }
 >                 else
 >                 {
+>		      // -----------------------
+>                     // The file does not exist
+>                     // -----------------------
 >                     return  NULL ;
 >                 }
 >             }
 >             else
 >             {
+>	  	  // -------------------------------------------------
+>		  // The file path data 'file-path' key does not exist
+>		  // -------------------------------------------------
 >                 return  NULL ;
 >             }
 >         }
 >         else
 >         {
+>	      // ---------------------------------------------------------------
+>	      // The file parameters ($section, $type, $item, $context) does not
+>	      // correspond to any defined file
+>	      // ---------------------------------------------------------------
 >             return  NULL ;
 >         }
 >     }
@@ -394,7 +436,7 @@ WAP -- WEB Application Platform
 >                                 break ;
 >                             
 >                             case 'text/javascript':
-> //                                return  file_get_contents( $config_file_path_data[ 'file_path' ], FALSE ) ;
+>                                 file_put_contents( $config_file_path_data[ 'file_path' ], $data ) ;
 >                             
 >                                 break ;
 >                             
