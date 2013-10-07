@@ -218,7 +218,9 @@ WAP -- WEB Application Platform
 >                                         break ;
 >                                 }
 >                                 
+>                                 // --------------------
 >                                 // Return the file path
+>                                 // --------------------
 >                                 
 >                                 if( key_exists( 'mime', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
 >                                 {
@@ -485,6 +487,6 @@ WAP -- WEB Application Platform
 
 #### Class inicialization
 
->     $GLOBALS[ 'WAP_config' ] = WAP_config::get_version() ;
->     $WAP_data::$module_version[ 'WAP_config' ] = WAP_config::get_version() ;
+>     $GLOBALS[ 'WAP_storage' ] = WAP_storage::get_version() ;
+>     $WAP_data::$module_version[ 'WAP_storage' ] = WAP_storage::get_version() ;
 
