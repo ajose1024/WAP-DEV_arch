@@ -13,8 +13,26 @@ WAP -- WEB Application Platform
 > 
 >     	  public static function get_config_data_file_path( $section, $type, $item, $context = '' ) ;
 >     	  public static function get_config_data( $section, $type, $item, $context = '' ) ;
-> 	  public static function set_config_data( $data, $section, $type, $item, $context = '' ) ;
->     
+>         
+>         public static function set_config_data( $data,
+>                                                 $section, $type, $item,
+>                                                 $context = '' ,
+>                                                 $file_data = array( 'base' => '/App_data/tmp/' ,
+>                                                                     'file' => 'null-file.dat',
+>                                                                     'type' => 'static' ,
+>                                                                     'mime' => 'plain/text'
+>                                                                   )
+>                                               )
+>         
+>         public static function create_config_data( $data = '' ,
+>                                                    $section = '' , $type = '' , $item = '' ,
+>                                                    $context = '' ,
+>                                                    $file_data = array( 'base' => '/App_data/tmp/data/' ,
+>                                                                        'file' => 'tmp-file.dat',
+>                                                                        'type' => 'static' ,
+>                                                                        'mime' => 'plain/text'
+>                                                                      )
+>                                               )
 >     }
 
 
@@ -416,7 +434,13 @@ WAP -- WEB Application Platform
 >     }
 >     
 >     
->     // Method:  set_config_data( $data, $section, $type, $item, $context = '' )
+>     // Method:  set_config_data( $data, $section, $type, $item, $context = '',
+>     //                           $file_data = array( 'base' => '/App_data/tmp/' ,
+>     //                                                         'file' => 'null-file.dat',
+>     //                                                         'type' => 'static' ,
+>     //                                                         'mime' => 'plain/text'
+>     //                                             )
+>     //                         )
 >     //
 >     // This method stores the config data file path related to the given item:
 >     //
@@ -504,11 +528,11 @@ WAP -- WEB Application Platform
 > 
 >     
 >     // Method:  create_config_data( $data, $section, $type, $item, $context = '',
->     //                              file_data = array( 'base' => '' ,
->     //                                                 'file' => '' ,
->     //                                                 'type' => '' ,
->     //                                                 'mime' => ''
->     //                                               )
+>     //                              $file_data = array( 'base' => '/App_data/tmp/data/' ,
+>     //                                                  'file' => 'tmp-file.dat',
+>     //                                                  'type' => 'static' ,
+>     //                                                  'mime' => 'plain/text'
+>     //                                                )
 >     //                            )
 >     //
 >     // This method stores the config data file path related to the given item,
@@ -531,10 +555,10 @@ WAP -- WEB Application Platform
 >     //
 >     // The  $file_data  parameter is an array with the following structure:
 >     // 
->     //  file_data = array( 'base' => '' ,
->     //                     'file' => '' ,
->     //                     'type' => '' ,
->     //                     'mime' => ''
+>     //  file_data = array( 'base' => '/App_data/tmp/data/' ,
+>     //                     'file' => 'tmp-file.dat' ,
+>     //                     'type' => 'static' ,
+>     //                     'mime' => 'plain/text'
 >     //                   )
 >     //
 >     // If the file can be successfully created and its data added to the 
