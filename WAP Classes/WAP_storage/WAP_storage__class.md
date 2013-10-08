@@ -104,13 +104,59 @@ WAP -- WEB Application Platform
 >         // ----------------------------
 >         //
 >         // Load and de-serialize the 'data_files_config.json' file
+>         self::load_data_files_config() ;
+>         
+>         // Get the 'config_files' data section
+>         self::read_data_sections_data() ;
+>     }
+>     
+>     
+>     // Method:  load_data_files_config()        // Private method
+>     //
+>     // This method loads and unserialises the following JSON file:
+>     //
+>     //  '/App_data/config/data_files_config.json'
+>     //
+>     // onto the private property  self::$data_files_config
+>     
+>     private static function load_data_files_config()
+>     {
 >         $data_files_config_file = $GLOBALS[ 'DOC_ROOT' ] . 
 >                                   "/App_data/config/data_files_config.json"
 >                                 ;
 >         
 >         self::$data_files_config = object_to_array( read_JSON_file( $data_files_config_file ) ) ;
 >         
->         // Get the 'config_files' data section
+>     }
+>     
+>     
+>     // Method:  save_data_files_config()        // Private method
+>     //
+>     // This method serializes and saves the following private property
+>     //
+>     //  self::$data_files_config
+>     //
+>     // onto the followinf JSON file:
+>     //
+>     //  '/App_data/config/data_files_config.json
+>     
+>     private static function save_data_files_config()
+>     {
+>         $data_files_config_file = $GLOBALS[ 'DOC_ROOT' ] . 
+>                                   "/App_data/config/data_files_config.json"
+>                                 ;
+> 
+>         write_JSON_file( $data_files_config_file , self::$data_files_config ) ;
+>     }
+>     
+> 
+>     // Method:  read_data_sections_data()
+>     //
+>     // This method reads the 'config_files' section from the  self::$data_files_config
+>     // array into the  self::$data_sections_data  array
+>     
+>     private static function read_data_sections_data()
+>     {
 >         $config_files = self::$data_files_config[ 'data_files_config' ][ 'config_files' ] ;
 >         
 >         foreach( $config_files as $section_name => $section_data )
@@ -121,8 +167,24 @@ WAP -- WEB Application Platform
 >                                                    ) ;
 >         }
 >     }
-
-
+>     
+>     
+>     // Method:  update_data_sections_data()
+>     //
+>     // This method updates the  self::#data_sections_data  associative array onto the
+>     // 'config_files' section of the  self::$data_files_config  associative array
+>     
+>     private static function update_data_sections_data()
+>     {
+>         self::$data_files_config[ 'data_files_config' ] = array_merge(
+>                                         self::$data_files_config[ 'data_files_config' ] ,
+>                                         array( 'config_files' => self::$data_sections_data ) 
+>                                                                      ) ;
+>     }
+>     
+>     
+> 
+ 
 
 ##### <i>PUBLIC methods:</i>
 
@@ -172,11 +234,7 @@ WAP -- WEB Application Platform
 >             {
 >                 if( key_exists( $item, self::$data_sections_data[ $section ][ $type ] ) )
 >                 {
->		      // ----------------------------
 >                     // Get the config file location
->		      // ----------------------------
->
->		      // Pre-load the 'document_root' base path
 >                     $config_file_path = $GLOBALS[ 'DOC_ROOT' ] ;
 >                     
 >                     if( key_exists( 'type', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
@@ -217,14 +275,14 @@ WAP -- WEB Application Platform
 >                                         
 >                                         break ;
 >                                 }
->                                 
->                                 // --------------------
+> 
+>                                 // --------------------                                
 >                                 // Return the file path
 >                                 // --------------------
 >                                 
->                                 if( key_exists( 'mime', self::$data_sections_data[ $section ][ $type ][ $item ] ) )
+>                                 if( key_exists( 'mime', self::$data_sections_data[ $section ][ $type ][ $item] ) )
 >                                 {
->                                     $mime_type = self::$data_sections_data[ $section ][ $type ][ $item ][ 'mime' ] ;
+>                                     $mime_type = self::$data_sections_data[ $section ][ $type ][ $item][ 'mime' ] ;
 >                                 }
 >                                 else
 >                                 {
@@ -237,53 +295,41 @@ WAP -- WEB Application Platform
 >                             }
 >                             else
 >                             {
->                                 // -------------------------------------------
 >                                 // Return NULL as the file name is not defined
->                                 // -------------------------------------------
 >                                 return  NULL ;
 >                             }
 >                         }
 >                         else
 >                         {
->                             // ------------------------------------------------
 >                             // Return NULL as the file base path is not defined
->                             // ------------------------------------------------
 >                             return  NULL ;
 >                         }
 >                     }
 >                     else
 >                     {
->                         // --------------------------------------------------
 >                         // Return NULL as the type of the file is not defined
->                         // --------------------------------------------------
 >                         return  NULL ;
 >                     }
 >                 }
 >                 else
 >                 {
->                     // ---------------------------
 >                     // Exists   'SECTION' & 'TYPE'
 >                     // Lacks    'ITEM'
->                     // ---------------------------
 >                     return  NULL ;
 >                 }
 >             }
 >             else
 >             {
->                 // ------------------
 >                 // Exists   'SECTION'
 >                 // Lacks    'TYPE'
 >                 // Untested 'ITEM'
->		  // ------------------
 >                 return  NULL ;
 >             }
 >         }
 >         else
 >         {
->             // ------------------------
 >             // Lacks    'SECTION'
 >             // Untested 'TYPE' & 'ITEM'
->             // ------------------------
 >             return  NULL ;
 >         }
 >         
@@ -313,15 +359,7 @@ WAP -- WEB Application Platform
 > 
 >     public static function get_config_data( $section, $type, $item, $context = '' )
 >     {
->         // -------------------------------------------
->	  // Get the config data file path and file type
->	  // -------------------------------------------
->
 >         $config_file_path_data = self::get_config_data_file_path( $section, $type, $item, $context ) ;
->
->	  // ----------------
->	  // Process the file
->	  // ----------------
 >         
 >         if( ! is_null( $config_file_path_data ) )
 >         {
@@ -335,25 +373,21 @@ WAP -- WEB Application Platform
 >                         
 >                         switch( $mime_type )
 >                         {
->			      // ----------------------------------------
->                             // The file type is 'text/json' (JSON file)
->                             // ----------------------------------------
 >                             case 'text/json':
 >                                 return  object_to_array( read_JSON_file( $config_file_path_data[ 'file_path' ] ) ) ;
 >                                 
 >                                 break ;
 >                             
->			      // --------------------------------------------
->			      // The file type is 'text/javascript' (JS file)
->			      // --------------------------------------------
 >                             case 'text/javascript':
 >                                 return  file_get_contents( $config_file_path_data[ 'file_path' ], FALSE ) ;
 >                             
 >                                 break ;
 >                             
->			      // ------------------------
->			      // The file type in unknown
->                             // ------------------------
+>                             case 'plain/text':
+>                                 return  file_get_contents( $config_file_path_data[ 'file_path' ], FALSE ) ;
+>                             
+>                                 break ;
+>                             
 >                             default:
 >                                 return  NULL ;
 >                                 
@@ -362,34 +396,21 @@ WAP -- WEB Application Platform
 >                     }
 >                     else
 >                     {
->			  // -------------------------------------------------
->			  // The file path data 'mime-type' key does not exist
->			  // -------------------------------------------------
 >                         return  NULL ;
 >                     }
 >                 }
 >                 else
 >                 {
->		      // -----------------------
->                     // The file does not exist
->                     // -----------------------
 >                     return  NULL ;
 >                 }
 >             }
 >             else
 >             {
->	  	  // -------------------------------------------------
->		  // The file path data 'file-path' key does not exist
->		  // -------------------------------------------------
 >                 return  NULL ;
 >             }
 >         }
 >         else
 >         {
->	      // ---------------------------------------------------------------
->	      // The file parameters ($section, $type, $item, $context) does not
->	      // correspond to any defined file
->	      // ---------------------------------------------------------------
 >             return  NULL ;
 >         }
 >     }
@@ -416,41 +437,53 @@ WAP -- WEB Application Platform
 >     //
 >     // The data file is passed in the $data parameter
 > 
->     public static function set_config_data( $data, $section, $type, $item, $context = '' )
+>     public static function set_config_data( $data,
+>                                             $section, $type, $item,
+>                                             $context = '' ,
+>                                             $file_data = array( 'base' => '/App_data/tmp/' ,
+>                                                                 'file' => 'null-file.dat',
+>                                                                 'type' => 'static' ,
+>                                                                 'mime' => 'plain/text'
+>                                                               )
+>                                           )
 >     {
 >         $config_file_path_data = self::get_config_data_file_path( $section, $type, $item, $context ) ;
 >         
 >         if( ! is_null( $config_file_path_data ) )
 >         {
+>             // ------------------------------
+>             // Test is 'file_path' key exists
+>             // ------------------------------
 >             if( key_exists( 'file_path', $config_file_path_data ) )
 >             {
->                 if( file_exists( $config_file_path_data[ 'file_path' ] ) )
+>                 
+>                 if( key_exists( 'mime-type', $config_file_path_data ) )
 >                 {
->                     if( key_exists( 'mime-type', $config_file_path_data ) )
+>                     $mime_type = $config_file_path_data[ 'mime-type' ] ;
+>                     
+>                     var_dump( $config_file_path_data ) ;
+>                     
+>                     switch( $mime_type )
 >                     {
->                         $mime_type = $config_file_path_data[ 'mime-type' ] ;
->                         
->                         switch( $mime_type )
->                         {
->                             case 'text/json':
->                                 write_JSON_file( $config_file_path_data[ 'file_path' ] , $data ) ;
+>                         case 'text/json':
+>                             write_JSON_file( $config_file_path_data[ 'file_path' ] , $data ) ;
 > 
->                                 break ;
+>                             break ;
 >                             
->                             case 'text/javascript':
->                                 file_put_contents( $config_file_path_data[ 'file_path' ], $data ) ;
+>                         case 'text/javascript':
+>                             file_put_contents( $config_file_path_data[ 'file_path' ], $data ) ;
+>                         
+>                             break ;
 >                             
->                                 break ;
+>                         case 'plain/text':
+>                             file_put_contents( $config_file_path_data[ 'file_path' ], $data ) ;
+>                         
+>                             break ;
 >                             
->                             default:
->                                 return  NULL ;
->                                 
->                                 break ;
->                         }
->                     }
->                     else
->                     {
->                         return  NULL ;
+>                         default:
+>                             return  NULL ;
+>                             
+>                             break ;
 >                     }
 >                 }
 >                 else
@@ -468,11 +501,115 @@ WAP -- WEB Application Platform
 >             return  NULL ;
 >         }
 >     }
->     
->     
 > 
 >     
+>     // Method:  create_config_data( $data, $section, $type, $item, $context = '',
+>     //                              file_data = array( 'base' => '' ,
+>     //                                                 'file' => '' ,
+>     //                                                 'type' => '' ,
+>     //                                                 'mime' => ''
+>     //                                               )
+>     //                            )
+>     //
+>     // This method stores the config data file path related to the given item,
+>     // creating the required file.
+>     //
+>     //  SECTION:    This selects the desired section ('general', 'resources', 
+>     //              etc. )
+>     //  TYPE:       This selects the TYPE inside the selected SECTION, such as,
+>     //              for 'resources' section:
+>     //                  'scripts'
+>     //                  'css'
+>     //                  'images'
+>     //                  etc ...
+>     //  ITEM:       This selects the specific element, inside a SECTION and
+>     //              within a TYPE, such as, for 'images' type:
+>     //                  back_ground
+>     //                  banners
+>     //                  lang_files
+>     //                  logos
+>     //
+>     // The  $file_data  parameter is an array with the following structure:
+>     // 
+>     //  file_data = array( 'base' => '' ,
+>     //                     'file' => '' ,
+>     //                     'type' => '' ,
+>     //                     'mime' => ''
+>     //                   )
+>     //
+>     // If the file can be successfully created and its data added to the 
+>     // self::$data_files_config, the method returns TRUE.
+>     // 
+>     // Otherwise, it returns FALSE.
 >     
+>     public static function create_config_data( $data = '' ,
+>                                                $section = '' , $type = '' , $item = '' ,
+>                                                $context = '' ,
+>                                                $file_data = array( 'base' => '/App_data/tmp/data/' ,
+>                                                                    'file' => 'tmp-file.dat',
+>                                                                    'type' => 'static' ,
+>                                                                    'mime' => 'plain/text'
+>                                                                  )
+>                                              )
+>     {
+>         // ---------------------------------------------------
+>         // Adjust  $file_data  for the required default values
+>         // ---------------------------------------------------
+>         
+>         // Adjust 'default' random file name
+>         $file_data[ 'file' ] = str_replace( '/', '|', mk_rnd_akey( 16 ) . '.dat' ) ;
+>         
+>         // Adjust the file type, according to the $context parameter
+>         if( $context === '' )
+>         {
+>             $file_data[ 'type' ] = 'static' ;
+>         }
+>         else
+>         {
+>             $file_data[ 'type' ] = 'context' ;
+>         }
+>         
+>         // Test if all 3 sections are defined or not
+>         if( $section !== '' && $type !== '' && $item !== '' )
+>         {
+>             // If ALL  $section, $type, $item  are defined and diffent from ''
+>             self::$data_sections_data = array_merge( self::$data_sections_data ,
+>                                                      array( $section => array( $type => array( $item => $file_data
+>                                                                                              )
+>                                                                              )
+>                                                           )
+>                                                    ) ;
+>         }
+>         else
+>         {
+>             // One or more of the file descriptors is not defined, so the file
+>             // can not be successfully created and stored.
+>             //
+>             // Signal this condition by returning FALSE
+>             
+>             return  FALSE ;
+>         }
+>         
+>         // Make sure that the actual 'base' directory exists...
+>         $file_base_dir = $GLOBALS[ 'DOC_ROOT' ] . $file_data[ 'base' ] ;
+>         
+>         if( !file_exists( $file_base_dir ) )
+>         {
+>             mkdir( $file_base_dir, 0750 , TRUE ) ;
+>         }
+>         
+>         // Then call  self::set_config_data($data, $section, $type, $item)
+>         // to actualy store the contents
+>         self::set_config_data( $data, $section, $type, $item, $context, $file_data ) ;
+>         
+>         self::update_data_sections_data() ;
+>         self::save_data_files_config() ;
+>         
+>         return  TRUE ;
+>     }
+>     
+> 
+>   
 >     public static function dump_data_files_config()
 >     {
 >         return  self::$data_files_config ;
@@ -483,7 +620,7 @@ WAP -- WEB Application Platform
 >         return  self::$data_sections_data ;
 >     }
 
-
+    
 
 #### Class inicialization
 
