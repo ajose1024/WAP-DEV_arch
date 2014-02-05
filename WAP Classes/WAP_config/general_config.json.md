@@ -28,7 +28,11 @@ WAP -- WEB Application Platform
 >                     "routes":           "/App_data/config/MVC/config/routes.json" ,
 >                     "smileys":          "/App_data/config/MVC/config/smileys.json" ,
 >                     "user_agents":      "/App_data/config/MVC/config/user_agents.php"
->                 }
+>                 },
+                  "databases":
+                  {
+                      "sys_DBs":          "/App_data/config/databases/sys_DBs.json",
+                      "app_DBs":          "/App_data/config/databases/app_DBs.json"
 >             }
 >         }
 >     }
