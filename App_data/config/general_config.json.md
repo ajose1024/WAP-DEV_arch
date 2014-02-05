@@ -1,3 +1,18 @@
+WAP -- WEB Application Platform
+-------------------------------
+
+## File:   general_config.json
+
+
+This file holds information for the configuration path for several commonly used config files.
+
+It is automatically created from the 'config_files' group in the 'data_config_files.json' master configuration file.
+
+<b>Its general format is as follows: (<i>a pratical example with some data</i>)</b>
+
+
+
+
 {
     "wap": "WEB Application Platform" ,
     "general_config":
