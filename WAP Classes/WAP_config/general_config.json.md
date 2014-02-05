@@ -33,6 +33,7 @@ WAP -- WEB Application Platform
                   {
                       "sys_DBs":          "/App_data/config/databases/sys_DBs.json",
                       "app_DBs":          "/App_data/config/databases/app_DBs.json"
+                  }
 >             }
 >         }
 >     }
